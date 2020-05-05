@@ -1,0 +1,19 @@
+{
+  "host": {
+    "address": "localhost",
+    "port": ":8080"
+  },
+  "Cache": {
+    "Dialect": "Redis",
+    "Host": "localhost",
+    "Port": ":6379",
+    "ADDR":"localhost:6379"
+  },
+  "Database": {
+    "Dialect": "MongoDB",
+    "Database": "contact",
+    "UserName": "root",
+    "Password": "root123",
+    "URL":"mongodb://root:root123@localhost:27017/"
+  }
+}

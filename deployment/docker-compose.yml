@@ -1,0 +1,46 @@
+version: '3.7'
+
+services:
+    contact:
+        build:
+            context: ..
+            dockerfile: build/Dockerfile
+        image: contact:${CONTACT_VERSION}
+        secrets:
+            - mongo-pwd
+        environment:
+            CONTACTENV: dev
+            MONGOURL: mongodb://mongo:27017/contact
+            REDISURL: redis:6379
+            MONGOUSERNAME: root
+            MONGOPWD: /run/secrets/mongo-pwd
+        depends_on:
+            - database
+            - redis
+        ports:
+            - "8080:8080"
+    database:
+        image: mongo:${MONGO_VERSION}
+        container_name: mongo
+        restart: always
+        secrets:
+            - mongo-pwd
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/mongo-pwd
+            MONGO_INITDB_DATABASE: contact
+        ports:
+            - 27017:27017
+        volumes:
+            - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    redis:
+        image: redis:${REDIS_VERSION}
+        container_name: redis
+        ports:
+            - 6379:6379
+        volumes:
+            - ./data/redis:/data
+secrets:
+    mongo-pwd:
+        #external: true
+        file: ./mongo-pwd.txt

@@ -1,0 +1,18 @@
+# comment
+.git
+.gitignore
+
+#secrets
+mongo-init.js
+mongo-pwd.txt
+
+output
+*.out
+*.log
+
+*/temp*
+*/*/temp*
+temp?
+
+*.md
+!README.md
